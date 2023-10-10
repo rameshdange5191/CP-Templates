@@ -5,7 +5,7 @@ struct BinaryLifting {
 	vector<vector<int>> parent;
 	vector<int> logValues;
 	bool precomputedLogs = false;
-	BinaryLifting(int n1, vector<int> *edges, ll requirement, int root) {
+	BinaryLifting(int n1, vector<vector<int>> &edges, ll requirement, int root) {
 		n = n1;
 		parent.resize(n);
 		maxLog = log2(requirement + 1);
@@ -20,7 +20,7 @@ struct BinaryLifting {
 		if (maxRequirement <= 1000000LL)
 			precomputeLogs();
 	}
-	void fillParentTable(int root, vector<int> *edges) {
+	void fillParentTable(int root, vector<vector<int>> &edges) {
 		vector<bool> visited(n);
 		dfsBinaryLifting(root, edges, visited);
 		int intermediate = -1;
@@ -33,7 +33,7 @@ struct BinaryLifting {
 			}
 		}
 	}
-	void dfsBinaryLifting(int root, vector<int> *edges, vector<bool> &visited) {
+	void dfsBinaryLifting(int root, vector<vector<int>> &edges, vector<bool> &visited) {
 		visited[root] = true;
 		for (auto i : edges[root]) {
 			if (!visited[i]) {
@@ -69,12 +69,12 @@ struct BinaryLifting {
 struct LCA {
 	int n;
 	vector<int> level;
-	LCA(int n1, vector<int> *edges, int root) {
+	LCA(int n1, vector<vector<int>> &edges, int root) {
 		n = n1;
 		level.resize(n);
 		dfsLCA(root, edges, -1);
 	}
-	void dfsLCA(int root, vector<int> *edges, int parent) {
+	void dfsLCA(int root, vector<vector<int>> &edges, int parent) {
 		for (auto i : edges[root]) {
 			if (i != parent) {
 				level[i] = level[root] + 1;
