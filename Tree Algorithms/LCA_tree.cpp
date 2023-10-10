@@ -7,10 +7,10 @@ struct BinaryLifting {
 	bool precomputedLogs = false;
 	BinaryLifting(int n1, vector<vector<int>> &edges, ll requirement, int root) {
 		n = n1;
-		parent.resize(n);
+		parent.resize(n + 1);
 		maxLog = log2(requirement + 1);
 		maxRequirement = requirement;
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i <= n; i++) {
 			parent[i].resize(maxLog + 1);
 			for (int j = 0; j <= maxLog; j++) {
 				parent[i][j] = -1;
@@ -21,11 +21,11 @@ struct BinaryLifting {
 			precomputeLogs();
 	}
 	void fillParentTable(int root, vector<vector<int>> &edges) {
-		vector<bool> visited(n);
+		vector<bool> visited(n + 1);
 		dfsBinaryLifting(root, edges, visited);
 		int intermediate = -1;
 		for (int i = 1; i <= maxLog; i++) {
-			for (int j = 0; j < n; j++) {
+			for (int j = 1; j <= n; j++) {
 				intermediate = parent[j][i - 1];
 				if (intermediate != -1) {
 					parent[j][i] = parent[intermediate][i - 1];
@@ -71,7 +71,7 @@ struct LCA {
 	vector<int> level;
 	LCA(int n1, vector<vector<int>> &edges, int root) {
 		n = n1;
-		level.resize(n);
+		level.resize(n + 1);
 		dfsLCA(root, edges, -1);
 	}
 	void dfsLCA(int root, vector<vector<int>> &edges, int parent) {
