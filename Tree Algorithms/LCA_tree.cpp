@@ -13,7 +13,7 @@ struct BinaryLifting {
 		for (int i = 1; i <= n; i++) {
 			parent[i].resize(maxLog + 1);
 			for (int j = 0; j <= maxLog; j++) {
-				parent[i][j] = -1;
+				parent[i][j] = 0;
 			}
 		}
 		fillParentTable(root, edges);
@@ -23,11 +23,11 @@ struct BinaryLifting {
 	void fillParentTable(int root, vector<vector<int>> &edges) {
 		vector<bool> visited(n + 1);
 		dfsBinaryLifting(root, edges, visited);
-		int intermediate = -1;
+		int intermediate = 0;
 		for (int i = 1; i <= maxLog; i++) {
 			for (int j = 1; j <= n; j++) {
 				intermediate = parent[j][i - 1];
-				if (intermediate != -1) {
+				if (intermediate != 0) {
 					parent[j][i] = parent[intermediate][i - 1];
 				}
 			}
@@ -55,7 +55,7 @@ struct BinaryLifting {
 		while (k > 0) {
 			int x = getLog(k);
 			a = parent[a][x];
-			if (a == -1)
+			if (a == 0)
 				return a;
 			k -= (1 << x);
 		}
